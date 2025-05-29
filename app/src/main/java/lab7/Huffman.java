@@ -3,6 +3,10 @@
  */
 package lab7;
 
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import heap.HashTable;
 import heap.Heap;
 
@@ -83,20 +87,32 @@ public class Huffman {
         }
     }
 
-    /**
-     * Inner container class which contains a character represented as a String and the frequency of that String
-     */
-    class CharFreq {
-        Character chara;
-        int freq;
-
-        public CharFreq(Character s, int f) {
-            chara = s;
-            freq = f;
-        }
-    }
-
     public static void main(String[] args) {
         
+        String fileName = args[0];
+        // get input file
+        File file = new File(fileName);
+        Scanner scanner;
+
+        Huffman huffman = new Huffman();
+        StringFrequency stringFreq = new StringFrequency();
+        Heap freqHeap;
+        AVL HCT;
+
+        // initialize scanner to read input file
+        try {
+            scanner = new Scanner(file).useDelimiter("//Z");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+        // copy input file to string
+        String inputStr = scanner.next();
+
+        // generate char frequencies from string
+        freqHeap = stringFreq.genFreq(inputStr);
+
+        // generate HCT from frequency heap
+        HCT = huffman.buildTree(freqHeap);
     }
 }

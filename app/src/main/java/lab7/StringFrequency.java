@@ -13,7 +13,7 @@ import heap.Heap;
 import heap.HashTable;
 import heap.AList;
 
-public class WordFrequency {
+public class StringFrequency {
 
     Heap freqHeap = new Heap();
     HashTable freqTable = new HashTable();
