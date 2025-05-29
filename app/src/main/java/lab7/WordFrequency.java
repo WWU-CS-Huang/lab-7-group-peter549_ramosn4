@@ -7,7 +7,7 @@
  * 
  */
 
-package main.java.lab7;
+package lab7;
 
 import heap.Heap;
 import heap.HashTable;
@@ -15,14 +15,14 @@ import heap.AList;
 
 public class WordFrequency {
 
-    Heap freqHeap = new Heap();
-    HashTable freqTable = new HashTable();
-    AList freqList = new AList();
+    Heap<CharFreq, Integer> freqHeap = new Heap<CharFreq, Integer>();
+    HashTable<Character, Integer> freqTable = new HashTable<Character, Integer>();
+    AList<Character> freqList = new AList<Character>();
 
     /*  convert an input string 
      * 
      */
-    public Heap genFreq(String inputStr) {
+    public Heap<CharFreq, Integer> genFreq(String inputStr) {
         genFreqTable(inputStr);
         genFreqHeap();
         return freqHeap;
@@ -47,7 +47,7 @@ public class WordFrequency {
                 freqList.append(curChar);
             }
             // create new entry in table with updated frequency (1 or origFreq+1)
-            freqTable.add(curChar, origFreq+1);
+            freqTable.put(curChar, origFreq+1);
         }
     }
 
@@ -55,14 +55,14 @@ public class WordFrequency {
      *  precondition: freqTable has already been populated
      */
     private void genFreqHeap() {
-        for (int i = 0; i < freqList.size; i ++) {
+        for (int i = 0; i < freqList.size(); i ++) {
             // get selected char/key from freqList
             char curChar = freqList.get(i);
             // get frequency corresponding to that char from freqTable
             int freq = freqTable.remove(curChar);
             // now that we have the selected char and its frequency, create new node in heap with these
             // create CharFreq with current char and freq so both are accessible later
-            CharFreq curCharFreq = CharFreq(curChar, freq);
+            CharFreq curCharFreq = new CharFreq(curChar, freq);
             // add new entry to heap with curCharFreq as value and freq as priority
             freqHeap.add(curCharFreq, freq);
         }
