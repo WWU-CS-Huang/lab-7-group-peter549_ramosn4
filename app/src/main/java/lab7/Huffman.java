@@ -13,12 +13,12 @@ public class Huffman {
     /**
      * Builds a tree from a list of frequencies
      */
-    public static AVL buildTree(Heap<StrFreq, Integer> frequencies) {
+    public static AVL buildTree(Heap<CharFreq, Integer> frequencies) {
         Heap<AVL, Integer> forest = new Heap<AVL, Integer>();
         while (frequencies.size() != 0) {
-            StrFreq c = frequencies.poll();
+            CharFreq c = frequencies.poll();
             AVL tree = new AVL();
-            tree.bstInsert(c.str);
+            tree.bstInsert(c.chara.toString());
             forest.add(tree, c.freq);
         }
         while (forest.size() > 1) {
@@ -86,12 +86,12 @@ public class Huffman {
     /**
      * Inner container class which contains a character represented as a String and the frequency of that String
      */
-    class StrFreq {
-        String str;
+    class CharFreq {
+        Character chara;
         int freq;
 
-        public StrFreq(String s, int f) {
-            str = s;
+        public CharFreq(Character s, int f) {
+            chara = s;
             freq = f;
         }
     }
