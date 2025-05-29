@@ -11,5 +11,7 @@ plugins {
 }
 
 rootProject.name = 'lab7'
+
 include('app')
 include('libs')
+
