@@ -59,17 +59,29 @@ public class Huffman {
 
     public static String encode(AVL tree, String input) {
         StringBuilder encoded = new StringBuilder();
-
+        HashTable<String, String> table = treeToMap(tree);
+        for (int i = 0; i < input.length(); i++) {
+            encoded.append(table.get(String.valueOf(input.charAt(i))));
+        }
         return encoded.toString();
     }
 
     private static HashTable<String, String> treeToMap(AVL tree) {
         //table is <character, how to get to it>
-
-        return null;
+        HashTable<String, String> table = new HashTable<String, String>();
+        treeToMap(tree.root, table, new StringBuilder());
+        return table;
     }
 
-
+    private static void treeToMap(AVL.Node n, HashTable<String, String> table, StringBuilder path) {
+        if (n.left == null) {
+            table.put(n.word, path.toString());
+        }
+        else {
+            treeToMap(n.left, table, path.append(0));
+            treeToMap(n.right, table, path.append(1));
+        }
+    }
 
     /**
      * Inner container class which contains a character represented as a String and the frequency of that String
