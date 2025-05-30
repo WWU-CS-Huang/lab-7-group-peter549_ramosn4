@@ -7,7 +7,7 @@
  * 
  */
 
-package main.java.lab7;
+package lab7;
 
 public class CharFreq {
     char character;
