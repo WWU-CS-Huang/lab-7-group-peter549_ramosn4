@@ -18,4 +18,7 @@ public class CharFreq {
         this.frequency = frequency;
     }
 
+    public String toString() {
+        return String.valueOf(character) + " " + String.valueOf(frequency);
+    }
 }
