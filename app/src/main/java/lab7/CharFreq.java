@@ -1,4 +1,4 @@
-/*  Naythan Ramos && ___ | CSCI 241
+/*  Naythan Ramos && Daniel Peterson | CSCI 241
  *  Lab 7 - 5.29.25
  * 
  *  CharFreq.java
@@ -10,8 +10,8 @@
 package lab7;
 
 public class CharFreq {
-    char character;
-    int frequency;
+    public char character;
+    public int frequency;
 
     public CharFreq(char character, int frequency) {
         this.character = character;

@@ -5,6 +5,8 @@
  *  
  *  given an input string, calculate the frequency of each letter in the string
  * 
+ *  store characters and their frequencies in a node as a value in a heap, with an associated priority equal to the frequency
+ * 
  */
 
 package lab7;
@@ -30,6 +32,8 @@ public class StringFrequency {
     /*  put character in input string into hash table
      *  key in table corresponds to character
      *  value in table corresponds to frequency
+     *  runtime: O(n), AList append can be an O(u) (u is # of unique chars) operation as well if the list needs to be
+     *  resized, but this will likely only happen 4-5 times max for any input string
      */
     private void genFreqTable(String inputStr) {
         // invaraint: inputStr[0..i] has been processed into freqTable
@@ -38,6 +42,7 @@ public class StringFrequency {
         for (int i = 0; i < inputStr.length(); i++) {
             // get selected char
             char curChar = inputStr.charAt(i);
+            //System.out.println(curChar);
             // if selected char is already in table, origFreq will = previous frequency of char
             // if selected char is not already in table, origFreq = 0
             int origFreq = 0;
@@ -56,6 +61,9 @@ public class StringFrequency {
 
     /*  convert freqTable into a heap
      *  precondition: freqTable has already been populated
+     *  runtime: ulog(u) where u is # of unique characters in string
+     *  does mean that worst case runtime could be > O(n), not sure how to get around this
+     *  but for an average case n >>> u so this is negligible
      */
     private void genFreqHeap() {
         for (int i = 0; i < freqList.size(); i ++) {
@@ -68,6 +76,7 @@ public class StringFrequency {
             CharFreq curCharFreq = new CharFreq(curChar, freq);
             // add new entry to heap with curCharFreq as value and freq as priority
             freqHeap.add(curCharFreq, freq);
+            //System.out.println(curCharFreq.toString());
         }
     }
 }

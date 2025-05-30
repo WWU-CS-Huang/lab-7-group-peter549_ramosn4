@@ -1,5 +1,11 @@
-/*
+/*  Daniel Perterson && Naythan Ramos | CSCI 241
+ *  Lab 7 - 5.29.25
  * 
+ *  Huffman.java
+ * 
+ *  implements a huffman coding tree for text file compression
+ * 
+ *  also includes a small main class for demonstrating functionality of HCT
  */
 package lab7;
 
@@ -143,6 +149,8 @@ public class Huffman {
         // copy input file to string
         String inputStr = scanner.next();
         scanner.close();
+        // the input string always has an extra newline char at the end for some reason, so we remove that
+        inputStr = inputStr.substring(0, inputStr.length()-1);
         // generate char frequencies from string
         freqHeap = stringFreq.genFreq(inputStr);
 
@@ -150,6 +158,19 @@ public class Huffman {
         HCT = buildTree(freqHeap);
         String en = encode(HCT, inputStr);
         String de = decode(HCT, en);
-        System.out.println(de);
+        
+        // for input lengths <= 100 chars, print strings
+        if (inputStr.length() <= 100) {
+            System.out.println("Input String: " + inputStr);
+            System.out.println("Encoded String: " + en);
+            System.out.println("Decoded String: " + de);
+        }
+
+        // general info
+        System.out.println("Decoded Equals Input: " + inputStr.equals(de));
+
+        double compRatio = ((float)en.length()/(float)inputStr.length()/8.0);
+        System.out.println("Compression Ratio: " + compRatio);
+
     }
 }
