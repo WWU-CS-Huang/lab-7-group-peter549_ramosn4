@@ -38,40 +38,33 @@ public class Huffman {
             AVL lowest = forest.poll();
             AVL secondLowest = forest.poll();
             AVL newTree = new AVL();
-            Scanner sc = new Scanner(lowest.root.word + " " + secondLowest.root.word);
             int combinedFreqs = 0;
-            if (sc.hasNextInt()) {
-                combinedFreqs += sc.nextInt();
+            if (lowest.root.left == null) {
+                combinedFreqs += Integer.valueOf(lowest.root.word.substring(2));
             }
             else {
-                sc.next();
-                combinedFreqs += sc.nextInt();
+                combinedFreqs += Integer.valueOf(lowest.root.word);
             }
-            if (sc.hasNextInt()) {
-                combinedFreqs += sc.nextInt();
+            if (secondLowest.root.left == null) {
+                combinedFreqs += Integer.valueOf(secondLowest.root.word.substring(2));
             }
             else {
-                sc.next();
-                combinedFreqs += sc.nextInt();
+                combinedFreqs += Integer.valueOf(secondLowest.root.word);
             }
             newTree.bstInsert(String.valueOf(combinedFreqs));
-            Scanner an = new Scanner(lowest.root.word + " " + secondLowest.root.word);
             if (lowest.root.left == null) {
-                newTree.root.left = newTree.new Node(an.next());
-                an.next();
+                newTree.root.left = newTree.new Node(String.valueOf(lowest.root.word.charAt(0)));
             }
             else {
                 newTree.root.left = lowest.root;
             }
             if (secondLowest.root.left == null) {
-                newTree.root.right = newTree.new Node(an.next());
+                newTree.root.right = newTree.new Node(String.valueOf(secondLowest.root.word.charAt(0)));
             }
             else {
                 newTree.root.right = secondLowest.root;
             }
             forest.add(newTree, combinedFreqs);
-            sc.close();
-            an.close();
         }
         AVL p = forest.poll();
         return p;
@@ -102,22 +95,23 @@ public class Huffman {
         return original.toString();
     }
 
+    /** Enocdes an input string given a Huffman coding tree */
     public static String encode(AVL tree, String input) {
         StringBuilder encoded = new StringBuilder();
         treeToMap(tree);
-        HashTable<String, String> t = table;
         for (int i = 0; i < input.length(); i++) {
             encoded.append(table.get(String.valueOf(input.charAt(i))));
         }
         return encoded.toString();
     }
 
+    /** Converts a Huffman coding tree into a map for encoding */
     private static void treeToMap(AVL tree) {
-        //table is <character, how to get to it>
         table = new HashTable<String, String>();
         treeToMap(tree.root, "");
     }
 
+    /** Converts a Huffman coding tree into a map for encoding */
     private static void treeToMap(AVL.Node n, String path) {
         if (n.left == null) {
             table.put(n.word, path);
