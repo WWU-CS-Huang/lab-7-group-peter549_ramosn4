@@ -3,3 +3,6 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore forced JDK filepath (had to add this for program to run on my PC - Naythan)
+gradle.properties
